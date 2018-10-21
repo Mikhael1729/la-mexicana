@@ -18,6 +18,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Fragment } from 'react';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import ProductsIcon from '@material-ui/icons/Store';
+import { NavLink } from 'react-router-dom';
 
 const drawerWidth = 240;
 const styles = (theme: Theme) => createStyles({
@@ -116,10 +117,12 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
                     <ShoppingCartIcon />
                 </IconButton>
 
-                {/* Shopping cart button */}
-                <IconButton color="inherit">
-                    <ProductsIcon />
-                </IconButton>
+                {/* Foods button */}
+                <NavLink to="/comida" activeStyle={{ color: 'inherit' }} style={{ color: 'inherit'}}>
+                    <IconButton color="inherit">
+                        <ProductsIcon />
+                    </IconButton>
+                </NavLink>
 
                 {/* Profile button */}
                 <Button children="Login" color="inherit"/>  
