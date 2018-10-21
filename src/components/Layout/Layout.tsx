@@ -8,6 +8,7 @@ import {
 import { CssBaseline } from '@material-ui/core';
 import { Navbar, SideBar } from 'containers';
 import 'styles/Layout.css';
+import brand_image from 'images/Chapa-Mexico.jpg';
 
 // #region Styles
 const drawerWidth = 240;
@@ -53,10 +54,10 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
       {/* Layout */}
       <div className={classes.root}>
         {/* Sidebar */}
-        <SideBar />
+        <SideBar brandImage={brand_image} brandTitle="La Mexicana"/>
 
         {/* Navbar */}
-        <Navbar />
+        <Navbar title="La Mexicana"/>
 
         {/* Content */}
         <main className={classes.content}>

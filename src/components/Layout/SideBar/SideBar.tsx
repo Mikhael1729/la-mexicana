@@ -36,6 +36,9 @@ export interface SideBarProps extends WithStyles<typeof styles>{
     mobileOpen: boolean;
     showSideBar: () => void;
     hideSideBar: () => void;
+
+    brandTitle: string;
+    brandImage: any;
 }
 
 export interface SideBarState {
@@ -52,7 +55,7 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
   public render() {
     const classes = this.props.classes;
 
-    const brand = (
+     const brand = (
         <div style={{
             display: 'flex',
             flexDirection: 'row',
@@ -60,7 +63,7 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
             alignItems: 'center'
         }}>
             <Avatar 
-                src={brand_image}
+                src={this.props.brandImage}
                 style={{  
                     width: "50px",
                     height: "50px",
@@ -69,32 +72,26 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
                 variant="h5" 
                 style={{ marginTop:'8px', marginLeft:'10px' }}
                 gutterBottom={true} 
-                children="La Mexicana" />
+                children={this.props.brandTitle} />
         </div>
     )
 
-    const drawer = (
-        <div>
-          <div style={{ paddingTop:'10px', paddingBottom:'10px' }}>
-            {brand}
-          </div>
-    
-          <Divider />
-          <List component="nav">
+    const drawer = <React.Fragment>
+        <List component="nav">
             <ListItem button={true}>
-            <ListItemIcon>
-                <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
+                <ListItemIcon>
+                    <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Inbox" />
             </ListItem>
             <ListItem button={true}>
-            <ListItemIcon>
-                <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
+                <ListItemIcon>
+                    <DraftsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Drafts" />
             </ListItem>
         </List>
-        
+    
         <Divider />
 
         <List component="nav">
@@ -105,8 +102,7 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
             <ListItemText primary="Spam" />
             </ListItem>
         </List>
-    </div>
-    );
+    </React.Fragment>
     return <React.Fragment>
         <Hidden mdUp={true}>
             <Drawer
@@ -121,6 +117,11 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
                     keepMounted: true, // Better open performance on mobile.
                 }}
             >
+                <div style={{ paddingTop:'10px', paddingBottom:'10px' }}>
+                    {brand}
+                </div>
+
+                <Divider />
                 {drawer}
             </Drawer>
             </Hidden>
@@ -133,6 +134,12 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
                 }}
                 anchor="left"
             >
+                <div style={{ paddingTop:'10px', paddingBottom:'10px' }}>
+                    {brand}
+                </div>
+
+                <Divider />
+
                 {drawer}
             </Drawer>
         </Hidden>
