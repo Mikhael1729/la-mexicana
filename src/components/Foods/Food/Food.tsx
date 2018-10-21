@@ -36,28 +36,43 @@ const styles = (theme: Theme) => createStyles({
     }
 })
 
-interface FoodProps extends WithStyles<typeof styles>{
+export interface FoodProps extends WithStyles<typeof styles>{
+    photo: any;
+    name: string;
+    ingredients: string;
+    shortDescription: string;
 }
 
-const Food: React.SFC<FoodProps> = (props) => {
-    const { card, media, actions, button } = props.classes;
+export interface FoodState {
+}
+
+class Food extends React.Component<FoodProps, FoodState> {
+  constructor(props: FoodProps) {
+    super(props);
+
+    this.state = {
+    }
+  }
+
+  public render() {
+    const { card, media, actions, button } = this.props.classes;
 
     return <Card className={card}>
         {/* Title and ingredients */}
         <CardHeader 
-            title="Taco a la mexicana"
-            subheader="Con queso, carne de res, tomate..."/>
+            title={this.props.name}
+            subheader={this.props.ingredients}/>
 
         {/* Photo */}
         <CardMedia 
             className={media}
-            image={taco_image}
+            image={this.props.photo}
             title="Taco de queso"/>
 
         {/* Short description */}
         <CardContent>
             <Typography variant="body1"gutterBottom={true}>
-                Preparado con la más delicada mano, el taco aquí presente nos deslumbra con su sabor increíble.
+                { this.props.shortDescription }
             </Typography>
 
             {/* Quantity panel */}
@@ -87,7 +102,6 @@ const Food: React.SFC<FoodProps> = (props) => {
 
         {/* Actions */}
         <CardActions className={actions} disableActionSpacing={false}>
-       
             {/* Add to shopping cart */}
             <Button 
                 variant="outlined" 
@@ -106,8 +120,8 @@ const Food: React.SFC<FoodProps> = (props) => {
                 Ingredientes
             </Button>
         </CardActions>
-
     </Card>;
-};
+  }
+}
 
 export default withStyles(styles)(Food);
