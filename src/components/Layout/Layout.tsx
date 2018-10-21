@@ -1,8 +1,13 @@
 import * as React from 'react';
-import { SideBar, Navbar } from 'components';
-import 'styles/Layout.css';
+import {
+  createStyles,
+  Theme,
+  withStyles,
+  WithStyles
+  } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-import { withStyles, Theme, WithStyles, createStyles } from '@material-ui/core/styles';
+import { Navbar, SideBar } from 'containers';
+import 'styles/Layout.css';
 
 // #region Styles
 const drawerWidth = 240;

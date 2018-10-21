@@ -29,6 +29,9 @@ const styles = (theme: Theme) => createStyles({
 });
 
 export interface NavbarProps extends WithStyles<typeof styles>{
+    mobileOpen: boolean;
+    showSideBar: () => void;
+    hideSideBar: () => void;
 }
 
 export interface NavbarState {
@@ -52,7 +55,7 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
             <IconButton
                 color="inherit"
                 aria-label="Open drawer"
-                onClick={this.handleDrawerToggle}
+                onClick={!this.props.mobileOpen ? this.props.showSideBar : this.props.hideSideBar}
                 className={classes.navIconHide}>
                 <MenuIcon />
             </IconButton>
@@ -63,10 +66,6 @@ class Navbar extends React.Component<NavbarProps, NavbarState> {
         </Toolbar>
     </AppBar>
   }
-
-  private handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
 }
 
 export default withStyles(styles)(Navbar);

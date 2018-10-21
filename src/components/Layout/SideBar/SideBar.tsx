@@ -33,10 +33,12 @@ const styles = (theme: Theme) => createStyles({
 
 export interface SideBarProps extends WithStyles<typeof styles>{
     theme: Theme;
+    mobileOpen: boolean;
+    showSideBar: () => void;
+    hideSideBar: () => void;
 }
 
 export interface SideBarState {
-    mobileOpen: boolean;
 }
 
 class SideBar extends React.Component<SideBarProps, SideBarState> {
@@ -44,7 +46,6 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
     super(props);
 
     this.state = {
-        mobileOpen: false
     }
   }
 
@@ -111,8 +112,8 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
             <Drawer
                 variant="temporary"
                 anchor={this.props.theme.direction === 'rtl' ? 'right' : 'left'}
-                open={this.state.mobileOpen}
-                onClose={this.handleDrawerToggle}
+                open={this.props.mobileOpen}
+                onClose={this.props.mobileOpen ? this.props.hideSideBar : this.props.showSideBar}
                 classes={{
                     paper: classes.drawerPaper,
                 }}
@@ -123,7 +124,7 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
                 {drawer}
             </Drawer>
             </Hidden>
-        <Hidden smDown={false} implementation="css">
+        <Hidden smDown={true} implementation="css">
             <Drawer
                 variant="permanent"
                 open={true}
@@ -137,10 +138,6 @@ class SideBar extends React.Component<SideBarProps, SideBarState> {
         </Hidden>
     </React.Fragment>;
   }
-
-  private handleDrawerToggle = () => {
-    this.setState(state => ({ mobileOpen: !state.mobileOpen }));
-  };
 }
 
 export default withStyles(styles, { withTheme: true })(SideBar);
