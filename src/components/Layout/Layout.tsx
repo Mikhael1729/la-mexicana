@@ -31,7 +31,6 @@ const styles = (theme: Theme) => createStyles({
 // #endregion
 
 export interface LayoutProps extends WithStyles<typeof styles>{
-  theme:  any;
 }
 
 export interface LayoutState {
@@ -69,4 +68,4 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
   }
 }
 
-export default withStyles(styles, { withTheme: true })(Layout);
+export default withStyles(styles)(Layout);
