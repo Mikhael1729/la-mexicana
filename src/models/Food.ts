@@ -4,10 +4,10 @@ import { IngredientsGroup } from './IngredientsGroup';
 import { init } from 'helpers/Init';
 
 export interface IFood extends IBaseEntity {
-	name? : string;
-	description? : string;
-	price? : number;
-	photo? : any;
+	name: string;
+	description: string;
+	price: number;
+	photo: any;
 }
 export interface Food extends IFood { }
 

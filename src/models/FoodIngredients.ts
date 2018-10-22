@@ -5,9 +5,9 @@ import { IngredientsGroup } from "./IngredientsGroup";
 import { init } from "helpers/Init";
 
 export interface IFoodIngredients extends IBaseEntity{
-    food: Food
+    food: Food;
     ingredients: Ingredient[];
-    ingredientsGroups: IngredientsGroup[];
+    ingredientsGroups?: IngredientsGroup[];
 }
 export interface FoodIngredients extends IFoodIngredients { }
 
