@@ -41,6 +41,7 @@ export interface FoodProps extends WithStyles<typeof styles>{
     name: string;
     ingredients: string;
     shortDescription: string;
+    openEditIngredientsDialog: () => void;
 }
 
 export interface FoodState {
@@ -115,7 +116,8 @@ class Food extends React.Component<FoodProps, FoodState> {
             <Button 
                 variant="outlined"
                 color="secondary"
-                className={button}>
+                className={button}
+                onClick={this.props.openEditIngredientsDialog}>
                 <EditIcon />
                 Ingredientes
             </Button>
