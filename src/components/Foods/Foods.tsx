@@ -10,21 +10,9 @@ export interface FoodsProps {
 
 export interface FoodsState {
   ingredientsModalIsOpen: boolean;
-  // editingFood: { id: number, name: string, price: number, photo: any, shortDescription: string, ingredients: string}
+  // currentFood: { id: number, name: string, price: number, photo: any, shortDescription: string, ingredients: string}
 }
 
-
-/**
- * 1. Se encarga de: 
- *      - Obtener las comidas.
- *      - Mostrarlas.
- * 
- * 2. Para editar una comida a añadir al carrito:
- *      - Se obtiene la comida en la que se presionó el botón de editar.
- *      - Se agrega a un array de comidas editadas si se editó algo: Stage food:
- *          - Al hacerlo el id al que hará referencia el botón 
- *      - 
- */
 export default class Foods extends React.Component<FoodsProps, FoodsState> {
   private foods = [
     { id: 1, name: 'Taco a la mexicana', price: 35.35, photo:food_image, shortDescription: 'Una pequeña descripción 1', ingredients:'Tiene queso, tomate, harina de maíz...' },
@@ -32,11 +20,13 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
     { id: 3, name: 'Taco 3', price: 80, photo:food_image, shortDescription: 'Una pequeña descripción 3', ingredients:'Tiene queso, tomate, harina de maíz...' },
   ]
 
+  private stageFoods = [];
+
   constructor(props: FoodsProps) {
     super(props); 
 
     this.state = {
-      ingredientsModalIsOpen: false
+      ingredientsModalIsOpen: false,
     }
 
     this.handleEditIngredientsOpen = this.handleEditIngredientsOpen.bind(this);
@@ -66,7 +56,7 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
       <Grid container={true} spacing={8}>
       { 
         this.foods.map((f) => (
-          <Grid item={true} xs={12} md={4} key={f.id}>
+          <Grid item={true} xs={12} sm={6} md={4} key={f.id}>
             <Food 
               foodId={f.id}
               photo={f.photo}
@@ -81,7 +71,8 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
       {/* Edit ingredients modal */}
       <EditIngredients 
         open={this.state.ingredientsModalIsOpen} 
-        closeDialog={this.handleEditIngredientsClose}/>
+        closeDialog={this.handleEditIngredientsClose}
+        />
 
     </Fragment>
   }
