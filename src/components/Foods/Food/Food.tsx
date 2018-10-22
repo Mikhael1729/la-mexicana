@@ -38,6 +38,7 @@ const styles = (theme: Theme) => createStyles({
 
 export interface FoodProps extends WithStyles<typeof styles>{
     photo: any;
+    foodId: number;
     name: string;
     ingredients: string;
     shortDescription: string;
