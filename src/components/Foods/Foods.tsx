@@ -2,9 +2,9 @@ import * as React from 'react';
 import { Fragment } from 'react';
 import { Typography, Grid } from '@material-ui/core';
 import Food from './Food/Food';
-import food_image from 'images/taco.jpg';
 import { EditIngredients } from 'components';
-import { FoodIngredients as FoodIngredientsModel, Food as FoodModel, Ingredient } from 'models';
+import { FoodIngredients as FoodIngredientsModel } from 'models';
+import { FoodData } from 'data/FoodData';
 
 export interface FoodsProps {
 }
@@ -15,23 +15,7 @@ export interface FoodsState {
 }
 
 export default class Foods extends React.Component<FoodsProps, FoodsState> {
-  private foods: FoodIngredientsModel[] = [
-    new FoodIngredientsModel({
-      food: new FoodModel({ id:1, name: 'Comida 1', description: 'Descripción 1', photo: food_image, price: 40 }),
-      ingredients: [
-        new Ingredient({ id: 1, name: 'Ingrediente 1', description: 'Ingrediente, descripción 1' }),
-        new Ingredient({ id: 2, name: 'Ingrediente 2', description: 'Ingrediente, descripción 2'})
-      ],
-    }),
-    new FoodIngredientsModel({
-      food: new FoodModel({ id:2, name: 'Comida 2', description: 'Descripción 2', photo: food_image, price: 80 }),
-      ingredients: [
-        new Ingredient({ id: 1, name: 'Ingrediente 2', description: 'Ingrediente, descripción 2' }),
-        new Ingredient({ id: 2, name: 'Ingrediente 1', description: 'Ingrediente, descripción 1'})
-      ],
-    }),
-  ]
-
+  private foods: FoodIngredientsModel[]  = FoodData.generateData();
   private stageFoods = [];
 
   constructor(props: FoodsProps) {
