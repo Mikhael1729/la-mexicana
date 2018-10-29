@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, DialogActions, withMobileDialog } from '@material-ui/core';
+import { FoodIngredients as FoodIngredientsModel } from 'models';
 
 export interface EditIngredientsProps {
     fullScreen?: any;
     open: boolean;
+    foodIngredients: FoodIngredientsModel
     closeDialog: () => void;
 }
 
@@ -29,8 +31,7 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
           <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Let Google help apps determine location. This means sending anonymous location data to
-              Google, even when no apps are running.
+              {this.props.foodIngredients.food.description}
             </DialogContentText>
           </DialogContent>
           <DialogActions>

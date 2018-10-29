@@ -4,20 +4,32 @@ import { Typography, Grid } from '@material-ui/core';
 import Food from './Food/Food';
 import food_image from 'images/taco.jpg';
 import { EditIngredients } from 'components';
+import { FoodIngredients as FoodIngredientsModel, Food as FoodModel, Ingredient } from 'models';
 
 export interface FoodsProps {
 }
 
 export interface FoodsState {
   ingredientsModalIsOpen: boolean;
-  // currentFood: { id: number, name: string, price: number, photo: any, shortDescription: string, ingredients: string}
+  currentFood: FoodIngredientsModel;
 }
 
 export default class Foods extends React.Component<FoodsProps, FoodsState> {
-  private foods = [
-    { id: 1, name: 'Taco a la mexicana', price: 35.35, photo:food_image, shortDescription: 'Una pequeña descripción 1', ingredients:'Tiene queso, tomate, harina de maíz...' },
-    { id: 2, name: 'Taco 2', price: 20, photo:food_image, shortDescription: 'Una pequeña descripción 2', ingredients:'Tiene queso, tomate, harina de maíz...' },
-    { id: 3, name: 'Taco 3', price: 80, photo:food_image, shortDescription: 'Una pequeña descripción 3', ingredients:'Tiene queso, tomate, harina de maíz...' },
+  private foods: FoodIngredientsModel[] = [
+    new FoodIngredientsModel({
+      food: new FoodModel({ id:1, name: 'Comida 1', description: 'Descripción 1', photo: food_image, price: 40 }),
+      ingredients: [
+        new Ingredient({ id: 1, name: 'Ingrediente 1', description: 'Ingrediente, descripción 1' }),
+        new Ingredient({ id: 2, name: 'Ingrediente 2', description: 'Ingrediente, descripción 2'})
+      ],
+    }),
+    new FoodIngredientsModel({
+      food: new FoodModel({ id:2, name: 'Comida 2', description: 'Descripción 2', photo: food_image, price: 80 }),
+      ingredients: [
+        new Ingredient({ id: 1, name: 'Ingrediente 2', description: 'Ingrediente, descripción 2' }),
+        new Ingredient({ id: 2, name: 'Ingrediente 1', description: 'Ingrediente, descripción 1'})
+      ],
+    }),
   ]
 
   private stageFoods = [];
@@ -27,6 +39,7 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
 
     this.state = {
       ingredientsModalIsOpen: false,
+      currentFood: this.foods[0]
     }
 
     this.handleEditIngredientsOpen = this.handleEditIngredientsOpen.bind(this);
@@ -35,16 +48,25 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
   }
 
   public render() {
-    const FoodItems = this.foods.map((f) => (
-      <Food 
-        key={f.id}
-        foodId={f.id}
-        photo={f.photo}
-        ingredients={f.ingredients}
-        name={f.name}
-        shortDescription={f.shortDescription}
-        openEditIngredientsDialog={this.handleEditIngredientsOpen} />
-      ));
+    const FoodItems = this.foods.map((plate, index) => {
+      return (
+        <Grid 
+          item={true} 
+          xs={12} 
+          sm={6} 
+          md={4} 
+          key={plate.food.id}
+        >
+          <Food 
+            foodId={index}
+            photo={plate.food.photo}
+            price={plate.food.price}
+            name={plate.food.name}
+            shortDescription={plate.food.description}
+            openEditIngredientsDialog={this.handleEditIngredientsOpen} />
+        </Grid>
+      );
+    });
 
     return <Fragment>
       {/* Title */}
@@ -54,31 +76,23 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
         children="Menú" />
 
       <Grid container={true} spacing={8}>
-      { 
-        this.foods.map((f) => (
-          <Grid item={true} xs={12} sm={6} md={4} key={f.id}>
-            <Food 
-              foodId={f.id}
-              photo={f.photo}
-              ingredients={f.ingredients}
-              name={f.name}
-              shortDescription={f.shortDescription}
-              openEditIngredientsDialog={this.handleEditIngredientsOpen} />
-          </Grid>
-      ))}
+        { FoodItems }
       </Grid>
 
       {/* Edit ingredients modal */}
       <EditIngredients 
         open={this.state.ingredientsModalIsOpen} 
-        closeDialog={this.handleEditIngredientsClose}
+        closeDialog={this.handleEditIngredientsClose} 
+        foodIngredients={this.state.currentFood}
         />
 
     </Fragment>
   }
 
-  private handleEditIngredientsOpen() {
-    this.setState({ ingredientsModalIsOpen: true });
+  private handleEditIngredientsOpen(index: number) {
+    this.setState({ 
+      ingredientsModalIsOpen: true, 
+      currentFood: this.foods[index] });
   }
 
   private handleEditIngredientsClose() {

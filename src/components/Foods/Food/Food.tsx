@@ -40,9 +40,9 @@ export interface FoodProps extends WithStyles<typeof styles>{
     photo: any;
     foodId: number;
     name: string;
-    ingredients: string;
+    price: number;
     shortDescription: string;
-    openEditIngredientsDialog: () => void;
+    openEditIngredientsDialog: (index: number) => void;
 }
 
 export interface FoodState {
@@ -54,6 +54,8 @@ class Food extends React.Component<FoodProps, FoodState> {
 
     this.state = {
     }
+
+    this.openEditIngredientsDialog = this.openEditIngredientsDialog.bind(this);
   }
 
   public render() {
@@ -63,7 +65,7 @@ class Food extends React.Component<FoodProps, FoodState> {
         {/* Title and ingredients */}
         <CardHeader 
             title={this.props.name}
-            subheader={this.props.ingredients}/>
+            subheader={`RD$ ${this.props.price}`}/>
 
         {/* Photo */}
         <CardMedia 
@@ -118,12 +120,16 @@ class Food extends React.Component<FoodProps, FoodState> {
                 variant="outlined"
                 color="secondary"
                 className={button}
-                onClick={this.props.openEditIngredientsDialog}>
+                onClick={this.openEditIngredientsDialog}>
                 <EditIcon />
                 Ingredientes
             </Button>
         </CardActions>
     </Card>;
+  }
+
+  private openEditIngredientsDialog() {
+    this.props.openEditIngredientsDialog(this.props.foodId);
   }
 }
 
