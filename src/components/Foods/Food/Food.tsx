@@ -19,6 +19,10 @@ import {
     TextField,
     IconButton
     } from '@material-ui/core';
+import { Fragment } from 'react';
+import { EditIngredients } from 'components';
+import { Food as FoodModel } from "models/Food";
+import { FoodIngredients as FoodIngredientsModel } from 'models';
 
 const styles = (theme: Theme) => createStyles({
     card: {
@@ -37,15 +41,12 @@ const styles = (theme: Theme) => createStyles({
 })
 
 export interface FoodProps extends WithStyles<typeof styles>{
-    photo: any;
-    foodId: number;
-    name: string;
-    price: number;
-    shortDescription: string;
-    openEditIngredientsDialog: (index: number) => void;
+    plate: FoodIngredientsModel;
 }
 
 export interface FoodState {
+    editIngredientsModalIsOpen: boolean;
+    modifiedFood: FoodIngredientsModel;
 }
 
 class Food extends React.Component<FoodProps, FoodState> {
@@ -53,83 +54,102 @@ class Food extends React.Component<FoodProps, FoodState> {
     super(props);
 
     this.state = {
+        editIngredientsModalIsOpen: false,
+        modifiedFood: this.props.plate
     }
 
     this.openEditIngredientsDialog = this.openEditIngredientsDialog.bind(this);
+    this.closeEditIngredientsDialog = this.closeEditIngredientsDialog.bind(this);
   }
 
   public render() {
     const { card, media, actions, button } = this.props.classes;
+    const { price, description, photo } = this.props.plate.food;
 
-    return <Card className={card}>
-        {/* Title and ingredients */}
-        <CardHeader 
-            title={this.props.name}
-            subheader={`RD$ ${this.props.price}`}/>
+    return <Fragment>
+        <Card className={card}>
+            {/* Title and ingredients */}
+            <CardHeader 
+                title={this.props.plate.food.name}
+                subheader={`RD$ ${price}`}/>
 
-        {/* Photo */}
-        <CardMedia 
-            className={media}
-            image={this.props.photo}
-            title="Taco de queso"/>
+            {/* Photo */}
+            <CardMedia 
+                className={media}
+                image={photo}
+                title="Taco de queso"/>
 
-        {/* Short description */}
-        <CardContent>
-            <Typography variant="body1"gutterBottom={true}>
-                { this.props.shortDescription }
-            </Typography>
+            {/* Short description */}
+            <CardContent>
+                <Typography variant="body1"gutterBottom={true}>
+                    { this.props.plate.food.description }
+                </Typography>
 
-            {/* Quantity panel */}
-            <div style={{ 
-                display:'flex',
-                flexDirection:'row',
-                justifyContent:'space-between',
-                alignItems:'center'  
-            }}>
-                <IconButton color="default" className={button} aria-label="Sum quantity">
-                    <AddIcon style={{ textShadow:'2px 2px black' }} />
-                </IconButton>
+                {/* Quantity panel */}
+                <div style={{ 
+                    display:'flex',
+                    flexDirection:'row',
+                    justifyContent:'space-between',
+                    alignItems:'center'  
+                }}>
+                    <IconButton color="default" className={button} aria-label="Sum quantity">
+                        <AddIcon style={{ textShadow:'2px 2px black' }} />
+                    </IconButton>
 
-                <TextField
-                    type="number"
-                    placeholder="0"
-                    value={5}/>
+                    <TextField
+                        type="number"
+                        placeholder="0"
+                        value={5}/>
 
-                <IconButton color="default" className={button} aria-label="Substract quantity">
-                    <RemoveIcon style={{
-                    textShadow:'2px 2px black'
-                 }} />
-                </IconButton>
-            </div>
-            
-        </CardContent>
+                    <IconButton color="default" className={button} aria-label="Substract quantity">
+                        <RemoveIcon style={{
+                        textShadow:'2px 2px black'
+                    }} />
+                    </IconButton>
+                </div>
+                
+            </CardContent>
 
-        {/* Actions */}
-        <CardActions className={actions} disableActionSpacing={false}>
-            {/* Add to shopping cart */}
-            <Button 
-                variant="outlined" 
-                color="primary" 
-                className={button}>
-                <AddShoppingCartIcon />
-                Agregar
-            </Button>
+            {/* Actions */}
+            <CardActions className={actions} disableActionSpacing={false}>
+                {/* Add to shopping cart */}
+                <Button 
+                    variant="outlined" 
+                    color="primary" 
+                    className={button}>
+                    <AddShoppingCartIcon />
+                    Agregar
+                </Button>
 
-            {/* Edit ingredients */}
-            <Button 
-                variant="outlined"
-                color="secondary"
-                className={button}
-                onClick={this.openEditIngredientsDialog}>
-                <EditIcon />
-                Ingredientes
-            </Button>
-        </CardActions>
-    </Card>;
+                {/* Edit ingredients */}
+                <Button 
+                    variant="outlined"
+                    color="secondary"
+                    className={button}
+                    onClick={this.openEditIngredientsDialog}>
+                    <EditIcon />
+                    Ingredientes
+                </Button>
+            </CardActions>
+        </Card>
+
+        { this.state.editIngredientsModalIsOpen
+            ? 
+                <EditIngredients 
+                    open={this.state.editIngredientsModalIsOpen}
+                    food={this.state.modifiedFood}
+                    closeDialog={this.closeEditIngredientsDialog} />
+            : null
+        }
+    </Fragment> 
   }
 
   private openEditIngredientsDialog() {
-    this.props.openEditIngredientsDialog(this.props.foodId);
+    this.setState({ editIngredientsModalIsOpen: true });
+  }
+
+  private closeEditIngredientsDialog() {
+      this.setState({ editIngredientsModalIsOpen: false });
   }
 }
 

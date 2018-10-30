@@ -25,10 +25,6 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
       ingredientsModalIsOpen: false,
       currentFood: this.foods[0]
     }
-
-    this.handleEditIngredientsOpen = this.handleEditIngredientsOpen.bind(this);
-    this.handleEditIngredientsClose = this.handleEditIngredientsClose.bind(this);
-    this.saveCustomFood = this.saveCustomFood.bind(this);
   }
 
   public render() {
@@ -42,12 +38,7 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
           key={plate.food.id}
         >
           <Food 
-            foodId={index}
-            photo={plate.food.photo}
-            price={plate.food.price}
-            name={plate.food.name}
-            shortDescription={plate.food.description}
-            openEditIngredientsDialog={this.handleEditIngredientsOpen} />
+            plate={plate}/>
         </Grid>
       );
     });
@@ -62,28 +53,6 @@ export default class Foods extends React.Component<FoodsProps, FoodsState> {
       <Grid container={true} spacing={8}>
         { FoodItems }
       </Grid>
-
-      {/* Edit ingredients modal */}
-      <EditIngredients 
-        open={this.state.ingredientsModalIsOpen} 
-        closeDialog={this.handleEditIngredientsClose} 
-        foodIngredients={this.state.currentFood}
-        />
-
     </Fragment>
-  }
-
-  private handleEditIngredientsOpen(index: number) {
-    this.setState({ 
-      ingredientsModalIsOpen: true, 
-      currentFood: this.foods[index] });
-  }
-
-  private handleEditIngredientsClose() {
-    this.setState({ ingredientsModalIsOpen: false });
-  };
-
-  private saveCustomFood(foodId: number) {
-
   }
 }
