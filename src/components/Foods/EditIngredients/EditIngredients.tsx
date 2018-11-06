@@ -66,6 +66,10 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
                     color="textSecondary" 
                     children={<b>RD$ {price}</b>}
                     style={{ marginTop:'-10px'}}/>
+
+                {/* Ingredients */}
+                
+
               </div>
           </DialogContent> 
 

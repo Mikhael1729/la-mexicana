@@ -39,7 +39,7 @@ export interface LayoutState {
 class Layout extends React.Component<LayoutProps, LayoutState> {
   constructor(props: LayoutProps) {
     super(props);
-
+    
     this.state = { }
   }
 
