@@ -91,6 +91,7 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
                         key={index}
                         control={
                           <Checkbox 
+                            // tslint:disable-next-line:jsx-no-lambda
                             onChange={this.ingredientClicked}
                             color="secondary"
                             value={index.toString()} />
@@ -117,9 +118,11 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
     );
   }
 
-  private ingredientClicked(e: any) {
+  private ingredientClicked(e: React.ChangeEvent<HTMLInputElement>) {
+
     const food = {...this.props.food};
-    food.ingredients[e.target.value];
+    food.ingredients[parseInt(e.target.value, 10)];
+
     
   }
 }
