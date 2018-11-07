@@ -1,6 +1,18 @@
 import * as React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, Button, DialogActions, withMobileDialog, Typography, Grid } from '@material-ui/core';
-import { FoodIngredients as FoodIngredientsModel, Food as FoodModel } from 'models';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  FormControlLabel,
+  Grid,
+  Typography,
+  withMobileDialog
+  } from '@material-ui/core';
+import { Food as FoodModel, FoodIngredients as FoodIngredientsModel } from 'models';
 
 export interface EditIngredientsProps {
     fullScreen?: any;
@@ -17,12 +29,16 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
     super(props);
 
     this.state = { }
+
+    this.ingredientClicked = this.ingredientClicked.bind(this);
   }
 
   public render() {
     const { name, description, photo, price } = this.props.food.food;
     const ingredients = this.props.food.ingredients;
     const ingredientsGroups = this.props.food.ingredientsGroups;
+
+    console.log(ingredients);
 
     return (
       <div>
@@ -67,8 +83,22 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
                     children={<b>RD$ {price}</b>}
                     style={{ marginTop:'-10px'}}/>
 
-                {/* Ingredients */}
-                
+                {/* TODO: Ingredients */}
+                { 
+                  ingredients.map((i, index) => {
+                    return(
+                      <FormControlLabel 
+                        key={index}
+                        control={
+                          <Checkbox 
+                            onChange={this.ingredientClicked}
+                            color="secondary"
+                            value={index.toString()} />
+                        } 
+                        label={i.name} />
+                    );
+                  })
+                }
 
               </div>
           </DialogContent> 
@@ -85,6 +115,12 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
         </Dialog>
       </div>
     );
+  }
+
+  private ingredientClicked(e: any) {
+    const food = {...this.props.food};
+    food.ingredients[e.target.value];
+    
   }
 }
 
