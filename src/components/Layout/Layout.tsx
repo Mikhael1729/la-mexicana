@@ -46,7 +46,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
   public render() {
     const classes = this.props.classes;
 
-    return <React.Fragment>
+    return <>
       {/* Normalizing styles for the material theme */}
       <CssBaseline />
 
@@ -64,7 +64,7 @@ class Layout extends React.Component<LayoutProps, LayoutState> {
             {this.props.children}
         </main>
       </div>
-    </React.Fragment>
+    </>
   }
 }
 
