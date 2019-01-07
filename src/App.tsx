@@ -14,7 +14,7 @@ class App extends React.Component {
     const json: any = await response.json();
     console.log(json);
     const converter: any = new JsonConvert();
-    const food: TestModel[] = converter.deserializeArray(json.value, TestModel); 
+    const food: TestModel[] = converter.deserialize(json.value, TestModel); 
 
     console.log(food);
   }

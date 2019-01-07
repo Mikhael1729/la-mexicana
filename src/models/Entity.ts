@@ -1,5 +1,4 @@
 import { JsonObject, JsonProperty } from "json2typescript";
-// tslint:disable:max-classes-per-file
 
 @JsonObject
 export class Entity {
