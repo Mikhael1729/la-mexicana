@@ -1,4 +1,4 @@
-import { JsonObject, JsonProperty } from "json2typescript";
+import { JsonObject, JsonProperty, JsonConvert } from "json2typescript";
 
 @JsonObject
 export class Entity {

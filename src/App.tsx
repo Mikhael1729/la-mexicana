@@ -2,21 +2,16 @@ import * as React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 import { Home, Foods } from 'components';
-import { Food } from 'models';
-import { JsonConvert } from 'json2typescript';
 import { TestModel } from "models";
-import { Entity } from 'models/Entity';
+import { EntityConverter as Converter } from "helpers/EntityConverter";
 
 class App extends React.Component {
 
   public async componentWillMount() {
     const response = await fetch("https://localhost:5001/api/foods");
     const json: any = await response.json();
-    console.log(json);
-    const converter: any = new JsonConvert();
-    const food: TestModel[] = converter.deserialize(json.value, TestModel); 
 
-    console.log(food);
+    const foods: TestModel[] = Converter.ConvertJsonArray(json.value, TestModel);
   }
 
   public render() {
