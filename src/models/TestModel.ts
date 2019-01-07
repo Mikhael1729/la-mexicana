@@ -5,7 +5,7 @@ import { Entity } from "models/Entity";
 @JsonObject
 export class TestModel extends Entity {
   public static type = "TestModel";
-  
+
   @JsonProperty("description", String, false)
   public description?: string = undefined;
 
