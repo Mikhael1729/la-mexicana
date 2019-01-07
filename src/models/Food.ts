@@ -7,7 +7,7 @@ export interface IFood extends IBaseEntity {
 	name: string;
 	description: string;
 	price: number;
-	photo: any;
+	photoUrl: any;
 }
 export interface Food extends IFood { }
 

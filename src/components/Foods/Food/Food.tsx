@@ -64,7 +64,7 @@ class Food extends React.Component<FoodProps, FoodState> {
 
   public render() {
     const { card, media, actions, button } = this.props.classes;
-    const { price, description, photo } = this.props.plate.food;
+    const { price, description, photoUrl: photo } = this.props.plate.food;
 
     return <Fragment>
         <Card className={card}>

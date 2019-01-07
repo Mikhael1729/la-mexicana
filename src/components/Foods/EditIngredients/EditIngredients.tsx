@@ -34,7 +34,7 @@ class EditIngredients extends React.Component<EditIngredientsProps, EditIngredie
   }
 
   public render() {
-    const { name, description, photo, price } = this.props.food.food;
+    const { name, description, photoUrl: photo, price } = this.props.food.food;
     const ingredients = this.props.food.ingredients;
     const ingredientsGroups = this.props.food.ingredientsGroups;
 
